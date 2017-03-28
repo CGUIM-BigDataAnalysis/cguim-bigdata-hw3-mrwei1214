@@ -10,10 +10,9 @@ output: github_document
 依下列指示，完成網站內文分析：
 
 - 爬取指定網站內容
-    - 學號結尾 0,4,8:[Ptt Tech_Job 版](https://www.ptt.cc/bbs/Tech_Job/index.html)
+
     - 學號結尾 1,5,9:[Ptt NBA 版](https://www.ptt.cc/bbs/NBA/index.html)
-    - 學號結尾 2,6:[Ptt LoL 版](https://www.ptt.cc/bbs/LoL/index.html)
-    - 學號結尾 3,7:[Ptt movie 版](https://www.ptt.cc/bbs/movie/index.html)
+
     
 - 試著爬出**至少100篇**文章（`30pt`）的**標題**、**推文數**與**作者ID**（各`10pt`）
     - 資料框欄位名稱：
@@ -40,30 +39,51 @@ output: github_document
 
 ## 網站資料爬取
 ```{r}
-#這是R Code Chunk
 library(rvest) ##第一次使用要先安裝 install.packages("rvest")
 ##read_html
 ##html_nodes
 ##html_text
-```
+NBA_posts_list <- list()
+for(i in 4580:4584){
+NBAurl<-paste("https://www.ptt.cc/bbs/NBA/index",i,".html",sep = '')
+NBAContent<-read_html(NBAurl)
 
+post_Title <- NBAContent %>%
+html_nodes(".title") %>% 
+html_text()
+
+post_PushNum <-NBAContent %>%
+html_nodes(".nrec")%>%
+html_text()
+
+post_Author<-NBAContent%>%
+html_nodes(".author")%>%
+html_text()
+
+data<-data.frame(title=post_Title,PushNum=post_PushNum,Author=post_Author)
+NBA_posts_list[[i]] <- data
+}
+NBA_dataframe<- rbind(NBA_posts_list[[4580]],NBA_posts_list[[4581]],NBA_posts_list[[4582]],NBA_posts_list[[4583]],NBA_posts_list[[4584]])
+```
 ## 爬蟲結果呈現
 ```{r}
-#這是R Code Chunk
-knitr::kable(iris) ##請將iris取代為上個步驟中產生的爬蟲資料資料框
+knitr::kable(NBA_dataframe)
 ```
 
 ## 解釋爬蟲結果 
 ```{r}
-#這是R Code Chunk
+nrow(NBA_dataframe)
 ```
 
-解釋解釋解釋解釋
+總共有幾列
+就是有幾篇文章標題
+總共100篇
 
 ```{r}
-#這是R Code Chunk
+sort(table(NBA_dataframe[3]),decreasing =TRUE)
 ```
 
-解釋解釋解釋解釋
+Rambo最多總共22篇
+Rambo在NBA板上主要是處理Live以及Box情報 所以文章數最多
 
-人工結論與解釋解釋解釋解釋解釋解釋解釋
+
