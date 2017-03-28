@@ -1,35 +1,6 @@
 長庚大學 大數據分析方法 作業三
 ================
 
-作業說明 （繳交時請直接刪除這個章節）
--------------------------------------
-
-作業目的：練習初級爬蟲，並將爬蟲結果整理成資料框data.frame
-
-依下列指示，完成網站內文分析：
-
--   爬取指定網站內容
-
-    -   學號結尾 1,5,9:[Ptt NBA 版](https://www.ptt.cc/bbs/NBA/index.html)
--   試著爬出**至少100篇**文章（`30pt`）的**標題**、**推文數**與**作者ID**（各`10pt`）
-    -   資料框欄位名稱：
-        -   **標題**：Title
-        -   **推文數**：PushNum
-        -   **作者ID**：Author
-    -   一頁只有20篇，該怎麼辦？
-        -   提示：使用for + rbind()將分批爬取出的資料結合
-        -   範例：dataframeAll&lt;-rbind(dataframe1,dataframe2)
-        -   參考：[6.6 資料組合](http://yijutseng.github.io/DataScienceRBook/manipulation.html#section-6.6)
--   將爬取出的資料輸出至Markdown報告中（`10pt`）
-    -   使用knitr::kable(資料框物件)整理輸出
--   用文字搭配程式碼解釋爬蟲結果
-    -   共爬出幾篇文章標題？（程式碼與文字解釋各`5pt`）
-        -   dim(), nrow(), str()皆可
-    -   哪個作者文章數最多？（程式碼與文字解釋各`5pt`）
-        -   table()
-    -   其他爬蟲結果解釋（`10pt`）
-        -   試著找出有趣的現象，不一定要用程式碼搭配解釋，也可只用文字
-
 網站資料爬取
 ------------
 
@@ -79,16 +50,8 @@ knitr::kable(NBA_dataframe)
 
 | title                                               | PushNum | Author       |
 |:----------------------------------------------------|:--------|:-------------|
-| \[情報\] Rookie Ladder Week 19                      | 8       | Vedan1213    |
-| \[情報\] 巴克利說球爸打不贏他                       | 46      | hitman0527   |
-| \[討論\] 姆斯守的住喬丹嗎？                         | X2      | kyle5241     |
-| \[討論\] HoopsHype 將11梯選秀重排                   | 47      | love1500274  |
-| \[Live\] 小牛 @ 巫師                                | 44      | Rambo        |
-| \[Live\] 黃蜂 @ 溜馬                                | 2       | Rambo        |
-| \[新聞\] 他倆在湖人最高薪　球團卻叫他們「坐」這     | X4      | zzyyxx77     |
-| \[Live\] 湖人 @ 火箭                                | 70      | Rambo        |
 | \[Live\] 拓荒者 @ 馬刺                              | 爆      | Rambo        |
-| \[新聞\] 柯神和湯神　誰是艾倫心中最強的射手？       | 99      | kirbya       |
+| \[新聞\] 柯神和湯神　誰是艾倫心中最強的射手？       | 爆      | kirbya       |
 | \[新聞\] 狀元熱門老爸又開砲　這回竟槓上詹皇和       | 71      | HANASUCIA    |
 | Re: \[情報\] 巴克利說球爸打不贏他                   | 32      | Rubio5566    |
 | \[新聞\] 庫班要賣10%股份給歐巴馬　但竟開價… 4       | A       | ssisi        |
@@ -113,7 +76,7 @@ knitr::kable(NBA_dataframe)
 | \[BOX \] Bucks 97:96 Clippers 數據                  | 81      | Rambo        |
 | \[花邊\] D'Antoni：現在對Kupchak和Buss是段艱難      | 22      | Yui5         |
 | \[外絮\] 香波：交易到騎士把我從地獄拉出來           | 爆      | kyle5241     |
-| \[新聞\] 大讚林書豪 羅培茲:他讓我們提升兩個層次     | 84      | jhemezuo     |
+| \[新聞\] 大讚林書豪 羅培茲:他讓我們提升兩個層次     | 85      | jhemezuo     |
 | \[花邊\] 低迷主因？柯瑞：球迷派兒子約我女兒         | 31      | adam7148     |
 | \[新聞\] 公牛遭灰熊毒手 Wade:時間所剩不多           | 14      | Angel0724    |
 | \[新聞\] 影／別擋詹皇路！ 隊友厄文快攻無辜遭撂      | 11      | adam7148     |
@@ -167,7 +130,6 @@ knitr::kable(NBA_dataframe)
 | \[專欄\] 總冠軍、MVP、老八與水蛙季末大預測LYS       | X9      | wayne64001   |
 | \[Live\] 魔術 @ 勇士                                | 99      | Rambo        |
 | \[新聞\] 林書豪15分8助攻 籃網一周內2勝尼克          | 爆      | jimmy5680    |
-| (本文已被刪除) \[qk56\]                             | X1      | -            |
 | \[討論\] 甜瓜放棄logo shot                          | 35      | yangsungo    |
 | \[BOX \] Nets 121:110 Knicks                        | 爆      | checktime    |
 | \[BOX \] Thunder 123:102 Raptors                    | 84      | checktime    |
@@ -177,8 +139,17 @@ knitr::kable(NBA_dataframe)
 | Re: \[討論\] Rubio今年FG%能跨越4成線嗎?             | 43      | carotyao     |
 | Re: \[花邊\] Westbrook對Curry的MVP看法表示：他誰？  | 29      | KirkSynder   |
 | \[情報\] Melo：這是我們最糟糕的賽季之一             | 91      | vm04vm04     |
-| \[討論\] NBA近幾年最強的選手                        | 99      | One102bird   |
+| \[討論\] NBA近幾年最強的選手                        | 爆      | One102bird   |
 | Re: \[討論\] 甜瓜放棄logo shot                      | 31      | aifighter    |
+| \[情報\] MVP預測-媒體記者106人調查                  | 53      | IBIZA        |
+| \[BOX \] Cavaliers 91:83 Jazz                       | 35      | a0025068     |
+| \[新聞\] 因為厄文的一句話，姆斯第四節大爆發         | 19      | kyle5241     |
+| \[討論\] 為了給對方尊重而失誤?                      | 11      | cp3jl17      |
+| \[情報\] Warriors clinch Pacific Division title     | 8       | Angel0724    |
+| \[花邊\] 雷槍: Steph Curry是我見過最好的射手        | 44      | djviva       |
+| Re: \[討論\] 沒拿過冠軍的球星你覺得最可惜的是？     | 11      | jackie0414   |
+| \[新聞\] 尼克歐崑輸球沒風度 抨擊籃網陣容弱          | 45      | pttpepe      |
+| \[花邊\] LBJ field goals 超越Tim Duncan             | 25      | jay0601zzz   |
 
 解釋爬蟲結果
 ------------
@@ -197,30 +168,30 @@ sort(table(NBA_dataframe[3]),decreasing =TRUE)
 
     ## 
     ##        Rambo    checktime     carotyao   thnlkj0665    dragon803 
-    ##           22            4            4            3            3 
-    ##     kyle5241         Yui5     adam7148    f22313467   bigDwinsch 
+    ##           19            4            4            3            3 
+    ##         Yui5     adam7148    Angel0724   bigDwinsch    f22313467 
     ##            2            2            2            2            2 
-    ##     vm04vm04    jimmy5680       s90523       Assisi    HANASUCIA 
-    ##            2            2            2            1            1 
-    ##   hitman0527 jailkobe5566       kirbya  love1500274   MLbaseball 
+    ##     kyle5241     vm04vm04    jimmy5680       s90523       Assisi 
+    ##            2            2            2            2            1 
+    ##    HANASUCIA jailkobe5566       kirbya   MLbaseball       pneumo 
     ##            1            1            1            1            1 
-    ##       pneumo    Rubio5566    Vedan1213     zzyyxx77    Angel0724 
+    ##    Rubio5566      dlOvOlb     jhemezuo       wn7158   zakijudelo 
     ##            1            1            1            1            1 
-    ##     jhemezuo      dlOvOlb iam168888888  jack0506000     jojoii82 
+    ##     hhll5566 iam168888888  jack0506000     jojoii82     kadasaki 
     ##            1            1            1            1            1 
-    ##     kadasaki       Kay731       lavida  manuginobii   schume0417 
+    ##       Kay731       lavida        lovea  manuginobii   nuturewind 
     ##            1            1            1            1            1 
-    ##  star1739456   sunnycello       wn7158     ymgs1507   zakijudelo 
+    ##      s106667   s870098123   schume0417  star1739456   sunnycello 
     ##            1            1            1            1            1 
-    ##     zzzz8931      Hangibb     hhll5566     hpan0806        lovea 
+    ##     ymgs1507     zzzz8931    bigbearee      Hangibb     hpan0806 
     ##            1            1            1            1            1 
-    ##       murray   nuturewind      s106667   s870098123  slamblock15 
+    ##       murray  slamblock15   TeacherLin      tsukiji   wayne64001 
     ##            1            1            1            1            1 
-    ##            -    aifighter    bigbearee   KirkSynder   n123033401 
+    ##     a0025068    aifighter      cp3jl17       djviva        IBIZA 
     ##            1            1            1            1            1 
-    ##   One102bird overkill0802   TeacherLin      tsukiji   wayne64001 
+    ##   jackie0414   jay0601zzz   KirkSynder   n123033401   One102bird 
     ##            1            1            1            1            1 
-    ##    yangsungo 
-    ##            1
+    ## overkill0802      pttpepe    yangsungo 
+    ##            1            1            1
 
 Rambo最多總共22篇 Rambo在NBA板上主要是處理Live以及Box情報 所以文章數最多
